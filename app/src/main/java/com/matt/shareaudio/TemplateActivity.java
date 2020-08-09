@@ -89,11 +89,7 @@ abstract class TemplateActivity extends AppCompatActivity implements IStatus {
      * @return
      */
     protected boolean audioEnable() {
-        if (StatusManager.getSingleton().isFirstPriority()) {
-            return StatusManager.getSingleton().isShowAudio();
-        } else {
-            return true;
-        }
+        return StatusManager.getSingleton().isShowAudio();
     }
 
     /**
@@ -124,6 +120,11 @@ abstract class TemplateActivity extends AppCompatActivity implements IStatus {
         renderAudioText(0f);
         Log.d(TAG, "pause:正在暂停 ");
         //暂停后ui的变化
+    }
+
+    @Override
+    public void audioVisible(boolean show) {
+        setAudioEnable(show);
     }
 
     public void renderAudioText(float progress) {

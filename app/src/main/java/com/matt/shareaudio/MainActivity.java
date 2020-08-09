@@ -22,17 +22,16 @@ public class MainActivity extends TemplateActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         //这句话放app类中
-        StatusManager.getSingleton().init(Status.STATUS_PLAY);
+        StatusManager.getSingleton().init(Status.STATUS_PLAY, true);
 
         super.onCreate(savedInstanceState);
         initView();
 
 
         //如果你想全局显示播放按钮，而不管是否重写audioEnable()
-//        StatusManager.getSingleton().setFirstPriority(true);
-//        StatusManager.getSingleton().setShowAudio(true);
+        StatusManager.getSingleton().setShowAudio(true);
         //这个时候你又想某个单个页面不显示
-        //setAudioEnable(false);
+        setAudioEnable(false);
     }
 
     private void initView() {

@@ -30,10 +30,10 @@ public class StatusManager {
 
     private Status mStatus;
     public List<IStatus> mStatusList;
-    private boolean mFirstPriority = true;
-    private boolean mShowAudio = true;
+    private boolean mShowAudio;
 
-    public void init(Status defStatus) {
+    public void init(Status defStatus, boolean defShowAudio) {
+        mShowAudio = defShowAudio;
         mStatus = defStatus;
         mStatusList = new ArrayList<>();
     }
@@ -71,19 +71,15 @@ public class StatusManager {
         return mStatus;
     }
 
-    public boolean isFirstPriority() {
-        return mFirstPriority;
-    }
-
-    public void setFirstPriority(boolean firstPriority) {
-        mFirstPriority = firstPriority;
-    }
-
     public boolean isShowAudio() {
         return mShowAudio;
     }
 
     public void setShowAudio(boolean showAudio) {
         mShowAudio = showAudio;
+        if (mStatusList == null) throw new IllegalArgumentException("请先调用StatusManager#init()方法");
+        for (IStatus iStatus : mStatusList) {
+            iStatus.audioVisible(mShowAudio);
+        }
     }
 }

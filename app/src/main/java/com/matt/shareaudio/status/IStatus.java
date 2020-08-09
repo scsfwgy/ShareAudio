@@ -18,4 +18,6 @@ public interface IStatus {
      * 暂停
      */
     void pause();
+
+    void audioVisible(boolean show);
 }
