@@ -30,6 +30,8 @@ public class StatusManager {
 
     private Status mStatus;
     public List<IStatus> mStatusList;
+    private boolean mFirstPriority = true;
+    private boolean mShowAudio = true;
 
     public void init(Status defStatus) {
         mStatus = defStatus;
@@ -51,7 +53,7 @@ public class StatusManager {
      *
      * @param status
      */
-    public void updateStatus(Status status,float progress) {
+    public void updateStatus(Status status, float progress) {
         if (mStatusList == null) throw new IllegalArgumentException("请先调用StatusManager#init()方法");
         mStatus = status;
         for (IStatus iStatus : mStatusList) {
@@ -67,5 +69,21 @@ public class StatusManager {
     public Status getCurrStatus() {
         if (mStatus == null) throw new IllegalArgumentException("请先调用StatusManager#init()方法");
         return mStatus;
+    }
+
+    public boolean isFirstPriority() {
+        return mFirstPriority;
+    }
+
+    public void setFirstPriority(boolean firstPriority) {
+        mFirstPriority = firstPriority;
+    }
+
+    public boolean isShowAudio() {
+        return mShowAudio;
+    }
+
+    public void setShowAudio(boolean showAudio) {
+        mShowAudio = showAudio;
     }
 }

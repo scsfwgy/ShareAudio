@@ -89,7 +89,11 @@ abstract class TemplateActivity extends AppCompatActivity implements IStatus {
      * @return
      */
     protected boolean audioEnable() {
-        return true;
+        if (StatusManager.getSingleton().isFirstPriority()) {
+            return StatusManager.getSingleton().isShowAudio();
+        } else {
+            return true;
+        }
     }
 
     /**

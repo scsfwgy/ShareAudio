@@ -26,6 +26,13 @@ public class MainActivity extends TemplateActivity {
 
         super.onCreate(savedInstanceState);
         initView();
+
+
+        //如果你想全局显示播放按钮，而不管是否重写audioEnable()
+//        StatusManager.getSingleton().setFirstPriority(true);
+//        StatusManager.getSingleton().setShowAudio(true);
+        //这个时候你又想某个单个页面不显示
+        //setAudioEnable(false);
     }
 
     private void initView() {
