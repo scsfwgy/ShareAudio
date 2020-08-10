@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.matt.shareaudio.status.AudioModel;
 import com.matt.shareaudio.status.IStatus;
 import com.matt.shareaudio.status.Status;
 import com.matt.shareaudio.status.StatusManager;
@@ -101,36 +102,6 @@ abstract class TemplateActivity extends AppCompatActivity implements IStatus {
         mStatusContainer.setVisibility(enable ? View.VISIBLE : View.GONE);
     }
 
-    /**
-     * 在这里处理播放的逻辑
-     */
-    @Override
-    public void play() {
-        //取值、设置值都通过StatusManager.getSingleton().getAudioModel()去操作。需要任何新的属性都定义到AudioModel中。
-        //比如你现在要播放新的path,那就更新path就好。
-        float progress = StatusManager.getSingleton().getAudioModel().progress;
-        renderAudioText(progress);
-        Log.d(TAG, "play:正在播放 " + progress);
-        //播放时ui的变化
-
-    }
-
-    /**
-     * 在这里处理暂停的逻辑
-     */
-    @Override
-    public void pause() {
-        renderAudioText(0f);
-        Log.d(TAG, "pause:正在暂停 ");
-        //暂停后ui的变化
-    }
-
-    @Override
-    public void changeVisible() {
-        boolean showAudio = StatusManager.getSingleton().isShowAudio();
-        setAudioEnable(showAudio);
-    }
-
     public void renderAudioText(float progress) {
         Status currStatus = StatusManager.getSingleton().getCurrStatus();
         if (currStatus == Status.STATUS_PLAY) {
@@ -138,5 +109,19 @@ abstract class TemplateActivity extends AppCompatActivity implements IStatus {
         } else if (currStatus == Status.STATUS_PAUSE) {
             mStatusTextView.setText("暂停");
         }
+    }
+
+
+    /**
+     * 在这里同步
+     */
+    @Override
+    public void syn() {
+        AudioModel audioModel = StatusManager.getSingleton().getAudioModel();
+        Status currStatus = audioModel.currStatus;
+        float progress = audioModel.progress;
+        boolean showAudio = audioModel.showAudio;
+        setAudioEnable(showAudio);
+        renderAudioText(progress);
     }
 }

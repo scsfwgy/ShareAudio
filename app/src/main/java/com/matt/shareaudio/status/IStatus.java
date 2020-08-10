@@ -7,15 +7,5 @@ package com.matt.shareaudio.status;
  * 描 述 ：
  **/
 public interface IStatus {
-    /**
-     * 播放
-     */
-    void play();
-
-    /**
-     * 暂停
-     */
-    void pause();
-
-    void changeVisible();
+    void syn();
 }
