@@ -66,13 +66,12 @@ abstract class TemplateActivity extends AppCompatActivity implements IStatus {
         mStatusContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Status currStatus = StatusManager.getSingleton().getCurrStatus();
-                if (currStatus == Status.STATUS_PLAY) {
-                    //这里是你播放进度，把进度传进来就好了，其他地方就可以都收到了
-                    StatusManager.getSingleton().updateStatus(Status.STATUS_PAUSE);
-                } else if (currStatus == Status.STATUS_PAUSE) {
-                    StatusManager.getSingleton().updateStatus(Status.STATUS_PLAY);
-                }
+                //你这里做需要做的操作，同时更新需要更新的
+                AudioModel audioModel = StatusManager.getSingleton().getAudioModel();
+                //更新需要更新的属性
+
+                //通知同步
+                StatusManager.getSingleton().syn();
             }
         });
     }

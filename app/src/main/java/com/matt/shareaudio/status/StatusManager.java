@@ -46,20 +46,10 @@ public class StatusManager {
         mStatusList.remove(iStatus);
     }
 
-    /**
-     * 同步状态
-     *
-     * @param status
-     */
-    public void updateStatus(Status status) {
+    public void syn() {
         if (mStatusList == null) throw new IllegalArgumentException("请先调用StatusManager#init()方法");
-        getAudioModel().currStatus = status;
         for (IStatus iStatus : mStatusList) {
-            if (status == Status.STATUS_PLAY) {
-                iStatus.play();
-            } else if (status == Status.STATUS_PAUSE) {
-                iStatus.pause();
-            }
+            iStatus.syn();
         }
     }
 
@@ -70,14 +60,6 @@ public class StatusManager {
 
     public boolean isShowAudio() {
         return getAudioModel().showAudio;
-    }
-
-    public void setShowAudio(boolean showAudio) {
-        getAudioModel().showAudio = showAudio;
-        if (mStatusList == null) throw new IllegalArgumentException("请先调用StatusManager#init()方法");
-        for (IStatus iStatus : mStatusList) {
-            iStatus.changeVisible();
-        }
     }
 
     public AudioModel getAudioModel() {
