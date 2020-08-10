@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.matt.shareaudio.status.AudioModel;
 import com.matt.shareaudio.status.Status;
 import com.matt.shareaudio.status.StatusManager;
 
@@ -22,7 +23,9 @@ public class MainActivity extends TemplateActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         //这句话放app类中
-        StatusManager.getSingleton().init(Status.STATUS_PLAY, true);
+        //把你所有全局操作的对象放到这个里面，不要散落的到处都是
+        AudioModel audioModel = new AudioModel("", 0f, Status.STATUS_PLAY, true);
+        StatusManager.getSingleton().init(audioModel);
 
         super.onCreate(savedInstanceState);
         initView();

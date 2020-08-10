@@ -28,13 +28,11 @@ public class StatusManager {
         return singleton;
     }
 
-    private Status mStatus;
     public List<IStatus> mStatusList;
-    private boolean mShowAudio;
+    private AudioModel mAudioModel;
 
-    public void init(Status defStatus, boolean defShowAudio) {
-        mShowAudio = defShowAudio;
-        mStatus = defStatus;
+    public void init(AudioModel defAudioModel) {
+        mAudioModel = defAudioModel;
         mStatusList = new ArrayList<>();
     }
 
@@ -53,12 +51,12 @@ public class StatusManager {
      *
      * @param status
      */
-    public void updateStatus(Status status, float progress) {
+    public void updateStatus(Status status) {
         if (mStatusList == null) throw new IllegalArgumentException("请先调用StatusManager#init()方法");
-        mStatus = status;
+        getAudioModel().currStatus = status;
         for (IStatus iStatus : mStatusList) {
             if (status == Status.STATUS_PLAY) {
-                iStatus.play(progress);
+                iStatus.play();
             } else if (status == Status.STATUS_PAUSE) {
                 iStatus.pause();
             }
@@ -67,19 +65,23 @@ public class StatusManager {
 
     @NonNull
     public Status getCurrStatus() {
-        if (mStatus == null) throw new IllegalArgumentException("请先调用StatusManager#init()方法");
-        return mStatus;
+        return getAudioModel().currStatus;
     }
 
     public boolean isShowAudio() {
-        return mShowAudio;
+        return getAudioModel().showAudio;
     }
 
     public void setShowAudio(boolean showAudio) {
-        mShowAudio = showAudio;
+        getAudioModel().showAudio = showAudio;
         if (mStatusList == null) throw new IllegalArgumentException("请先调用StatusManager#init()方法");
         for (IStatus iStatus : mStatusList) {
-            iStatus.audioVisible(mShowAudio);
+            iStatus.changeVisible();
         }
+    }
+
+    public AudioModel getAudioModel() {
+        if (mAudioModel == null) throw new IllegalArgumentException("请先调用StatusManager#init()方法");
+        return mAudioModel;
     }
 }

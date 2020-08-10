@@ -9,15 +9,13 @@ package com.matt.shareaudio.status;
 public interface IStatus {
     /**
      * 播放
-     *
-     * @param progress 0~1 表示当前播放进度
      */
-    void play(float progress);
+    void play();
 
     /**
      * 暂停
      */
     void pause();
 
-    void audioVisible(boolean show);
+    void changeVisible();
 }

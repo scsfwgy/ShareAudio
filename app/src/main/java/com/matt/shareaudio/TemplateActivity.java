@@ -68,9 +68,9 @@ abstract class TemplateActivity extends AppCompatActivity implements IStatus {
                 Status currStatus = StatusManager.getSingleton().getCurrStatus();
                 if (currStatus == Status.STATUS_PLAY) {
                     //这里是你播放进度，把进度传进来就好了，其他地方就可以都收到了
-                    StatusManager.getSingleton().updateStatus(Status.STATUS_PAUSE, 0f);
+                    StatusManager.getSingleton().updateStatus(Status.STATUS_PAUSE);
                 } else if (currStatus == Status.STATUS_PAUSE) {
-                    StatusManager.getSingleton().updateStatus(Status.STATUS_PLAY, 5f);
+                    StatusManager.getSingleton().updateStatus(Status.STATUS_PLAY);
                 }
             }
         });
@@ -105,7 +105,10 @@ abstract class TemplateActivity extends AppCompatActivity implements IStatus {
      * 在这里处理播放的逻辑
      */
     @Override
-    public void play(float progress) {
+    public void play() {
+        //取值、设置值都通过StatusManager.getSingleton().getAudioModel()去操作。需要任何新的属性都定义到AudioModel中。
+        //比如你现在要播放新的path,那就更新path就好。
+        float progress = StatusManager.getSingleton().getAudioModel().progress;
         renderAudioText(progress);
         Log.d(TAG, "play:正在播放 " + progress);
         //播放时ui的变化
@@ -123,8 +126,9 @@ abstract class TemplateActivity extends AppCompatActivity implements IStatus {
     }
 
     @Override
-    public void audioVisible(boolean show) {
-        setAudioEnable(show);
+    public void changeVisible() {
+        boolean showAudio = StatusManager.getSingleton().isShowAudio();
+        setAudioEnable(showAudio);
     }
 
     public void renderAudioText(float progress) {
